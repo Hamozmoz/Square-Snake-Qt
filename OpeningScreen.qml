@@ -34,4 +34,35 @@ FocusScope
         }
         }
     }
-}
+    Rectangle{
+        id: eyewhite
+        color: "white"
+    width: screen.screenWidthPart * 8
+    height: width
+y: screen.screenWidthPart
+    radius : width/2
+    Rectangle{
+        id: eyeblack
+    anchors.verticalCenter: eyewhite.verticalCenter
+
+        color: "black"
+        transform: Rotation{
+id : openingscreenblackeye
+            origin.x :eyeblack.width
+            origin.y : eyeblack.height/2
+        }
+        width: parent.width/2
+       height: width
+       radius: width/2
+    }
+
+    }
+MouseArea{
+anchors.fill: screen
+hoverEnabled: true
+onPositionChanged: openingscreenblackeye.angle =Snake.calculateOpeningScreenEyeAngle(mouseX,mouseY,eyewhite.x + eyewhite.width/2,eyewhite.y + eyewhite.height/2)
+}}
+
+
+
+
