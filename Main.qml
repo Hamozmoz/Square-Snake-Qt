@@ -29,13 +29,13 @@ focus : true
 
 Keys.onPressed: (event)=>{
                 event.accepted = true
-                    if(event.key === Qt.Key_W ){
+                    if(event.key === Qt.Key_W  || event.key === Qt.Key_Up){
                     Snake.takeInput(DataContainer.Up)
-                    }else if(event.key === Qt.Key_D){
+                    }else if(event.key === Qt.Key_D|| event.key === Qt.Key_Right){
                         Snake.takeInput(DataContainer.Right)
-                    }else if(event.key === Qt.Key_S){
+                    }else if(event.key === Qt.Key_S || event.key === Qt.Key_Down){
                         Snake.takeInput(DataContainer.Down)
-                    }else if (event.key === Qt.Key_A){
+                    }else if (event.key === Qt.Key_A|| event.key === Qt.Key_Left){
                         Snake.takeInput(DataContainer.Left)
                     }else{
                         event.accepted = false;
