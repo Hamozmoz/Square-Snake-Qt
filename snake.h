@@ -13,6 +13,7 @@ class Snake : public QObject
     Q_PROPERTY(double SnakeEyeAngle READ GetAngleOfSnakeEye NOTIFY AngleOfSnakeEyeChanged)
 public:
     static Snake& getmover();
+ Q_INVOKABLE   double calculateEyeAngle(const double& mousex,const double& mousey,const double& eyex, const double& eyey );
     Q_INVOKABLE void takeInput( DataContainer::Direction direction = DataContainer::Null);
     void snakemovement();
     void UpdateTileStates();
@@ -22,8 +23,6 @@ signals:
     void AngleOfSnakeEyeChanged();
 private:
     double AngleOfSnakeEye{0};
-    Position PrvHeadPosition;
-    Position PrvCherryPosition;
     std::deque<char> Movements;
     void RotateHead();
     Snake() = default;
@@ -31,7 +30,7 @@ private:
     void rotatesnake();
     void EatCherry();
     void GrowSnake();
-    void CalculateEyeAngle();
+
 
 };
 

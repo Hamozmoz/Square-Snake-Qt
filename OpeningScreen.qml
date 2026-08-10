@@ -60,7 +60,7 @@ id : openingscreenblackeye
 MouseArea{
 anchors.fill: screen
 hoverEnabled: true
-onPositionChanged: openingscreenblackeye.angle =Snake.calculateOpeningScreenEyeAngle(mouseX,mouseY,eyewhite.x + eyewhite.width/2,eyewhite.y + eyewhite.height/2)
+onPositionChanged: openingscreenblackeye.angle =Snake.calculateEyeAngle(mouseX,mouseY,eyewhite.x + eyewhite.width/2,eyewhite.y + eyewhite.height/2)
 }}
 
 

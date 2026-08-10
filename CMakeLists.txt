@@ -21,27 +21,28 @@ qt_add_qml_module(appSnake2
     URI Snake2
     QML_FILES
         Main.qml
-        SOURCES
-        QML_FILES GameGrid.qml
-        SOURCES GameData.h
-        QML_FILES SnakeDrawer.qml
-        SOURCES
-        SOURCES GameData.cpp
-        SOURCES snake.h snake.cpp
-        QML_FILES GameoverScreen.qml
-        QML_FILES OpeningScreen.qml
-        QML_FILES Cherry.qml
+        GameGrid.qml
+        SnakeDrawer.qml
+        GameoverScreen.qml
+        OpeningScreen.qml
+        Cherry.qml
+    SOURCES
+        GameData.h
+        GameData.cpp
+        snake.h
+        snake.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
 set_target_properties(appSnake2 PROPERTIES
-#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appSnake2
+#   MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appSnake2
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
+    RC_ICONS "${CMAKE_CURRENT_SOURCE_DIR}/app_icon.ico"
 )
 
 target_link_libraries(appSnake2
