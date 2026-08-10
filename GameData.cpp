@@ -36,7 +36,7 @@ DataContainer::DataContainer()
     }
 
     // Getters For Values
-    std::vector<Position>& DataContainer::GetPositions(){
+    std::deque<Position>& DataContainer::GetPositions(){
         return Positions;
     }
     std::vector<DataContainer::Direction>& DataContainer::GetDirections(){
