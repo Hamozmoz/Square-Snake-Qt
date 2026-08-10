@@ -1,5 +1,5 @@
 #include "GameData.h"
-#include "snakemover.h"
+#include "snake.h"
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     qmlRegisterSingletonInstance("Snake2",1,0,"DataContainer",&(DataContainer::GetData()));
-    qmlRegisterSingletonInstance("Snake2",1,0,"Snakemover",&(Snakemover::getmover()));
+    qmlRegisterSingletonInstance("Snake2",1,0,"Snake",&(Snake::getmover()));
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreationFailed,

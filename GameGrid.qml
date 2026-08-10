@@ -1,6 +1,6 @@
 import QtQuick
 
-Item {
+FocusScope {
     id: gridroot
 property int rows : 15
 property int columns: 17

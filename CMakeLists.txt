@@ -27,7 +27,10 @@ qt_add_qml_module(appSnake2
         QML_FILES SnakeDrawer.qml
         SOURCES
         SOURCES GameData.cpp
-        SOURCES snakemover.h snakemover.cpp
+        SOURCES snake.h snake.cpp
+        QML_FILES GameoverScreen.qml
+        QML_FILES OpeningScreen.qml
+        QML_FILES Cherry.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
