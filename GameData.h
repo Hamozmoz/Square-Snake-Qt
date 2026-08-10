@@ -1,5 +1,6 @@
 #ifndef GAMEDATA_H
 #define GAMEDATA_H
+#include <deque>
 #include <random>
 #include <QtQml>
 #include <qtmetamacros.h>
@@ -72,7 +73,7 @@ enum Direction: uint8_t{ Up, Down, Right, Left ,Null};
     Q_ENUM( Direction);
     QList<Direction> Getdirections();
     QList<Position> Getpositions();
-    std::vector<Position>& GetPositions();
+    std::deque<Position> &GetPositions();
     std::vector<Direction>& GetDirections();
    const bool GetCherryState();
     const uint8_t GetRows();
@@ -120,7 +121,7 @@ private:
  bool GameOn{false};
  QChronoTimer* timer;
   std::vector<Direction> Directions{Up,Up,Up};
- std::vector<Position> Positions{ {9,7},{9,8},{9,9} };
+ std::deque<Position> Positions{ {9,7},{9,8},{9,9} };
 std::vector<Position> FreeTiles;
     void SpawnCherry();
 std::vector<TileState> TilesStates;
