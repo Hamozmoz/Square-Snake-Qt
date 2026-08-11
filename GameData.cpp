@@ -3,7 +3,7 @@
 
 DataContainer::DataContainer()
 {
-    timer = new QChronoTimer(std::chrono::milliseconds(250),this);
+    timer = new QChronoTimer(std::chrono::milliseconds(125),this);
 
     connect(this,&DataContainer::gamestarted,this,&DataContainer::startGame);
     connect(timer,&QChronoTimer::timeout,&Snake::getmover(),&Snake::snakemovement);
