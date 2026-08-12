@@ -90,7 +90,7 @@ private:
 std::vector<Position> FreeTiles;
     void SpawnCherry();
 std::vector<TileState> TilesStates;
-    uint8_t Rows{15},Columns{17};
+    int8_t Rows{15},Columns{17};
 };
 
 #endif // GAMEDATA_H

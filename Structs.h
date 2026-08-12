@@ -5,13 +5,13 @@
 struct Position{
     Q_GADGET
 public:
-    uint8_t x,y;
+    int8_t x,y;
     int8_t Displacement;
     Q_PROPERTY(int8_t Displacement READ getDisplacement)
-    Q_PROPERTY(uint8_t x READ getx WRITE setx )
-    Q_PROPERTY(uint8_t y READ gety WRITE sety )
+    Q_PROPERTY(int8_t x READ getx WRITE setx )
+    Q_PROPERTY(int8_t y READ gety WRITE sety )
     // x functions
-    uint8_t getx(){return x;}
+    int8_t getx(){return x;}
     void setx(uint8_t xvalue)
     {
         if(x != xvalue)
@@ -21,9 +21,9 @@ public:
     }
     //y functions
 
-    uint8_t gety(){return y; }
+    int8_t gety(){return y; }
 
-    void sety(uint8_t yvalue)
+    void sety(int8_t yvalue)
     {if(y != yvalue )
         {
             y = yvalue;
@@ -40,6 +40,6 @@ public:
         return newposition;
     }
     int8_t getDisplacement(){ return Displacement;}
-    Position(uint8_t xval = 0, uint8_t yval = 0,int8_t Disval = 0): x(xval),y(yval),Displacement(Disval){}
+    Position(int8_t xval = 0, int8_t yval = 0,int8_t Disval = 0): x(xval),y(yval),Displacement(Disval){}
 };
 #endif // STRUCTS_H

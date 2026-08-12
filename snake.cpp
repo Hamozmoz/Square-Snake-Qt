@@ -35,26 +35,29 @@ double Snake::GetAngleOfSnakeEye(){
 
             if(DataContainer::GetData().Positions.positions[0].y -1 < 0)
            {
-               DataContainer::GetData().Positions.positions.push_front({DataContainer::GetData().Positions.positions[0].x,static_cast<uint8_t>(DataContainer::GetData().Rows )});
+               DataContainer::GetData().Positions.positions.push_front({DataContainer::GetData().Positions.positions[0].x,static_cast<int8_t>(DataContainer::GetData().Rows )});
                 InputDisabled = true;
             }else
             {
-            DataContainer::GetData().Positions.positions.push_front({DataContainer::GetData().Positions.positions[0].x,static_cast<uint8_t>(DataContainer::GetData().Positions.positions[0].y -1)});
+            DataContainer::GetData().Positions.positions.push_front({DataContainer::GetData().Positions.positions[0].x,static_cast<int8_t>(DataContainer::GetData().Positions.positions[0].y -1)});
             }
        }else if(DataContainer::GetData().Directions[0] == DataContainer::Down){
            if(DataContainer::GetData().Positions.positions[0].y + 1 >= DataContainer::GetData().Rows){
-               DataContainer::GetData().Positions.positions.push_front({DataContainer::GetData().Positions.positions[0].x , 0});
+               InputDisabled = true;
+               DataContainer::GetData().Positions.positions.push_front({DataContainer::GetData().Positions.positions[0].x , -1});
            }else{
-         DataContainer::GetData().Positions.positions.push_front({DataContainer::GetData().Positions.positions[0].x,static_cast<uint8_t>(DataContainer::GetData().Positions.positions[0].y +1)});
+         DataContainer::GetData().Positions.positions.push_front({DataContainer::GetData().Positions.positions[0].x,static_cast<int8_t>(DataContainer::GetData().Positions.positions[0].y +1)});
            }}else if(DataContainer::GetData().Directions[0] == DataContainer::Right){
            if(DataContainer::GetData().Positions.positions[0].x +1 >= DataContainer::GetData().Columns){
-               DataContainer::GetData().Positions.positions.push_front({0,DataContainer::GetData().Positions.positions[0].y });
+               InputDisabled = true;
+               DataContainer::GetData().Positions.positions.push_front({-1,DataContainer::GetData().Positions.positions[0].y });
            }else{
-           DataContainer::GetData().Positions.positions.push_front({static_cast<uint8_t>(DataContainer::GetData().Positions.positions[0].x +1),DataContainer::GetData().Positions.positions[0].y });
+           DataContainer::GetData().Positions.positions.push_front({static_cast<int8_t>(DataContainer::GetData().Positions.positions[0].x +1),DataContainer::GetData().Positions.positions[0].y });
            } }else if(DataContainer::GetData().Directions[0] == DataContainer::Left){
-           if(DataContainer::GetData().Positions.positions[0].x -1 <0 ){  InputDisabled = true;
-               DataContainer::GetData().Positions.positions.push_front({static_cast<uint8_t>(DataContainer::GetData().Columns),DataContainer::GetData().Positions.positions[0].y });
-           }else{  DataContainer::GetData().Positions.positions.push_front({static_cast<uint8_t>(DataContainer::GetData().Positions.positions[0].x -1),DataContainer::GetData().Positions.positions[0].y });
+           if(DataContainer::GetData().Positions.positions[0].x -1 <0 ){
+               InputDisabled = true;
+               DataContainer::GetData().Positions.positions.push_front({static_cast<int8_t>(DataContainer::GetData().Columns),DataContainer::GetData().Positions.positions[0].y });
+           }else{  DataContainer::GetData().Positions.positions.push_front({static_cast<int8_t>(DataContainer::GetData().Positions.positions[0].x -1),DataContainer::GetData().Positions.positions[0].y });
            }}
        DataContainer::GetData().Positions.positions.pop_back();
        DataContainer::GetData().Positions.DataChanged(0,DataContainer::GetData().Positions.positions.size() - 1);
