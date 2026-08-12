@@ -7,7 +7,7 @@ FocusScope {
         height: gamegrid.tileheight
     x: DataContainer.CherryPosition.x * gamegrid.tilewidth
     y: DataContainer.CherryPosition.y * gamegrid.tileheight
-        source:"file:///C:/Users/hamoz/Downloads/Browser Games - Google Snake Game - Playable Characters & Objects - Food.png"
+        source:"Gamesprites/CherrySprite.png"
     SequentialAnimation{
         running: true
         loops: Animation.Infinite
