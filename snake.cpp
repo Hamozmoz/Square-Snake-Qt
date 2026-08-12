@@ -30,19 +30,13 @@ double Snake::GetAngleOfSnakeEye(){
     }
     void Snake::movesegments()
     {
-/*
-        static int counts {0};
-
-            static QElapsedTimer myTimer;
-
-        qDebug() << counts<<" Time passed since Last Move :" << myTimer.elapsed()  << "ms";
-       myTimer.restart();
-        counts ++;
-*/
+        InputDisabled = false;
        if(DataContainer::GetData().Directions[0] == DataContainer::Up){
+
             if(DataContainer::GetData().Positions.positions[0].y -1 < 0)
            {
-               DataContainer::GetData().Positions.positions.push_front({DataContainer::GetData().Positions.positions[0].x,static_cast<uint8_t>(DataContainer::GetData().Rows -1)});
+               DataContainer::GetData().Positions.positions.push_front({DataContainer::GetData().Positions.positions[0].x,static_cast<uint8_t>(DataContainer::GetData().Rows )});
+                InputDisabled = true;
             }else
             {
             DataContainer::GetData().Positions.positions.push_front({DataContainer::GetData().Positions.positions[0].x,static_cast<uint8_t>(DataContainer::GetData().Positions.positions[0].y -1)});
@@ -58,11 +52,12 @@ double Snake::GetAngleOfSnakeEye(){
            }else{
            DataContainer::GetData().Positions.positions.push_front({static_cast<uint8_t>(DataContainer::GetData().Positions.positions[0].x +1),DataContainer::GetData().Positions.positions[0].y });
            } }else if(DataContainer::GetData().Directions[0] == DataContainer::Left){
-           if(DataContainer::GetData().Positions.positions[0].x -1 <0 ){
-               DataContainer::GetData().Positions.positions.push_front({static_cast<uint8_t>(DataContainer::GetData().Columns-1),DataContainer::GetData().Positions.positions[0].y });
+           if(DataContainer::GetData().Positions.positions[0].x -1 <0 ){  InputDisabled = true;
+               DataContainer::GetData().Positions.positions.push_front({static_cast<uint8_t>(DataContainer::GetData().Columns),DataContainer::GetData().Positions.positions[0].y });
            }else{  DataContainer::GetData().Positions.positions.push_front({static_cast<uint8_t>(DataContainer::GetData().Positions.positions[0].x -1),DataContainer::GetData().Positions.positions[0].y });
            }}
        DataContainer::GetData().Positions.positions.pop_back();
+       DataContainer::GetData().Positions.DataChanged(0,DataContainer::GetData().Positions.positions.size() - 1);
             UpdateTileStates();
         HeadPosition = &(DataContainer::GetData().Positions.positions.front());
             emit DataContainer::GetData().positionschanged();
@@ -71,7 +66,7 @@ double Snake::GetAngleOfSnakeEye(){
 
     void Snake::takeInput( DataContainer::Direction direction )
     {
-        if(Movements.size() >= 2){
+        if(Movements.size() >= 2 ){
             return;
         }
 
@@ -94,7 +89,7 @@ double Snake::GetAngleOfSnakeEye(){
         }
     }
     void Snake::RotateHead(){
-
+        if( InputDisabled) {return;}
         if(Movements[0] == 'w' && *Headdirection != DataContainer::Down){
             *Headdirection = DataContainer::Up;
         }else if (Movements[0] == 's' && *Headdirection != DataContainer::Up){
@@ -111,12 +106,17 @@ double Snake::GetAngleOfSnakeEye(){
         }
     }
     void Snake::snakemovement(){
-        if(!GameOver()){
+        static uint8_t framecount {0};
+        ChangeSnakeDisplacement();
+        framecount ++;
+        if(framecount >= 25&& !GameOver()){
+            ResetDisplacement();
         RotateHead();
         movesegments();
         EatCherry();
         rotatesnake();
         calculateEyeAngle(DataContainer::GetData().Cherrypos.x,DataContainer::GetData().Cherrypos.y,HeadPosition->x,HeadPosition->y);
+        framecount = 0;
         }
     }
     void Snake::EatCherry(){
@@ -130,6 +130,7 @@ double Snake::GetAngleOfSnakeEye(){
     }
     void Snake::GrowSnake(){
         DataContainer::GetData().Directions.push_back(DataContainer::GetData().Directions.back());
+        DataContainer::GetData().Positions.BeginInsertRows(DataContainer::GetData().Positions.positions.size() -1);
         if(DataContainer::GetData().Directions.back() == DataContainer::Up){
             DataContainer::GetData().Positions.positions.push_back(Position(DataContainer::GetData().Positions.positions.back().x,(DataContainer::GetData().Positions.positions.back().y + 1)));
         }else if(DataContainer::GetData().Directions.back() == DataContainer::Down){
@@ -140,6 +141,7 @@ double Snake::GetAngleOfSnakeEye(){
             DataContainer::GetData().Positions.positions.push_back(Position(DataContainer::GetData().Positions.positions.back().x + 1, DataContainer::GetData().Positions.positions.back().y));
         }
 
+        DataContainer::GetData().Positions.EndInsertRows();
         Headdirection = &(DataContainer::GetData().Directions.front());
         DataContainer::GetData().TilesStates[getMatrixIndex(DataContainer::GetData().Positions.positions.back().x,DataContainer::GetData().Positions.positions.back().y)] = TileState::snake;
 
@@ -174,8 +176,23 @@ double Snake::GetAngleOfSnakeEye(){
       //  double Dx =  HeadPosition->x -DataContainer::GetData().Cherrypos.x ;
      //   double Dy =   HeadPosition->y - DataContainer::GetData().Cherrypos.y;
 
+    void Snake::ChangeSnakeDisplacement(){
+        for(size_t i {0}; i< DataContainer::GetData().Directions.size(); i++){
+            if(DataContainer::GetData().Directions[i] == DataContainer::Up || DataContainer::GetData().Directions[i] == DataContainer::Left){
+                DataContainer::GetData().Positions.positions[i].Displacement --;
+            } else if(DataContainer::GetData().Directions[i] == DataContainer::Down || DataContainer::GetData().Directions[i] == DataContainer::Right){
+                DataContainer::GetData().Positions.positions[i].Displacement ++;
+            }
 
-
+        }
+ DataContainer::GetData().Positions.DataChanged(0,DataContainer::GetData().Positions.positions.size() - 1);
+    }
+    void Snake::ResetDisplacement(){
+        for(int i {0}; i <DataContainer::GetData().Positions.positions.size();i++){
+            DataContainer::GetData().Positions.positions[i].Displacement = 0;
+        }
+         DataContainer::GetData().Positions.DataChanged(0,DataContainer::GetData().Positions.positions.size() - 1);
+    }
     double Snake::calculateEyeAngle(const double& mousex,const double& mousey,const double& eyex, const double& eyey )
     {
         double Dx =    eyex- mousex;

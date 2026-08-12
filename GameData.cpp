@@ -3,7 +3,7 @@
 
 DataContainer::DataContainer()
 {
-    timer = new QChronoTimer(std::chrono::milliseconds(125),this);
+    timer = new QChronoTimer(std::chrono::milliseconds(5),this);
 
     connect(this,&DataContainer::gamestarted,this,&DataContainer::startGame);
     connect(timer,&QChronoTimer::timeout,&Snake::getmover(),&Snake::snakemovement);
@@ -18,12 +18,9 @@ DataContainer::DataContainer()
             return list;
     }
 // Positions Reader
-    QList<Position> DataContainer::Getpositions(){
-        QList<Position> list;
-        for(auto i : Positions.positions){
-            list.append(i);
-        }
-        return list;
+    PositionsModel *DataContainer::Getpositions(){
+
+        return &Positions;
     }
 
     // Free Tiles List Reader

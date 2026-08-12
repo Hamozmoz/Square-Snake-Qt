@@ -16,7 +16,7 @@ class DataContainer: public QObject{
     QML_ELEMENT
     QML_SINGLETON
     Q_PROPERTY(QList<Direction> directions READ Getdirections NOTIFY directionschanged)
-    Q_PROPERTY(QList<Position> positions READ Getpositions NOTIFY positionschanged)
+    Q_PROPERTY(QAbstractListModel* Positions READ Getpositions CONSTANT)
     Q_PROPERTY(bool ThereisACherry READ GetCherryState NOTIFY cherryStateChanged)
     Q_PROPERTY(uint8_t Rows READ GetRows NOTIFY RowsChanged)
     Q_PROPERTY(uint8_t Columns READ GetColumns NOTIFY ColumnsChanged)
@@ -37,7 +37,7 @@ enum Direction: uint8_t{ Up, Down, Right, Left ,Null};
     }
     Q_ENUM( Direction);
     QList<Direction> Getdirections();
-    QList<Position> Getpositions();
+    PositionsModel* Getpositions();
     std::deque<Position> &GetPositions();
     std::vector<Direction>& GetDirections();
    const bool GetCherryState();

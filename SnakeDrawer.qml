@@ -7,23 +7,20 @@ FocusScope {
         property real tilesegmentwidth : gamegrid.tilewidth/20
 
 Repeater{
-   model:DataContainer.positions
+   model:DataContainer.Positions
+id:snakeReapeater
+
 Rectangle{
 color: "royalblue"
 height: gamegrid.tileheight
 width: gamegrid.tilewidth
-x: modelData.x * gamegrid.tilewidth
-y: modelData.y * gamegrid.tileheight
-Behavior on x{
-   PropertyAnimation{
-      duration: 250
-   }
-}
-Behavior on y{
-   PropertyAnimation{
-      duration: 250
-   }
-}
+property real displacement : model.Displacement
+x: (DataContainer.directions[index] === DataContainer.Left || DataContainer.directions[index] === DataContainer.Right)?
+model.x * gamegrid.tilewidth+ model.Displacement * gamegrid.horizontalMoveDistance : model.x * gamegrid.tilewidth
+y: (DataContainer.directions[index] === DataContainer.Down || DataContainer.directions[index] === DataContainer.Up)?
+    model.y * gamegrid.tileheight + model.Displacement * gamegrid.verticalMoveDistance:
+    model.y * gamegrid.tileheight
+
 }
 
 
@@ -42,8 +39,22 @@ DataContainer.directions[0] === DataContainer.Right?90:
 DataContainer.directions[0] === DataContainer.Down ? 180:
 270
            }
-            x:DataContainer.positions[0].x* gamegrid.tilewidth + tilesegmentwidth
-            y:DataContainer.positions[0].y* gamegrid.tileheight
+
+           Connections{
+           target : DataContainer.Positions
+              function onDataChanged(topLeft, bottomRight){
+           row.x =   (DataContainer.directions[0] === DataContainer.Left || DataContainer.directions[0] === DataContainer.Right)?
+                      DataContainer.Positions.getx(0) * gamegrid.tilewidth  + tilesegmentwidth + DataContainer.Positions.getDisplacement(0) *gamegrid.horizontalMoveDistance:
+                      DataContainer.Positions.getx(0) * gamegrid.tilewidth
+                 row.y = (DataContainer.directions[0] === DataContainer.Down || DataContainer.directions[0] === DataContainer.Up)?
+                         DataContainer.Positions.gety(0) * gamegrid.tileheight + DataContainer.Positions.getDisplacement(0) * gamegrid.verticalMoveDistance
+               :         DataContainer.Positions.gety(0) * gamegrid.tileheight
+
+           }
+
+}
+
+
             spacing: root.tilesegmentwidth * 2
         Repeater{
             model : 2

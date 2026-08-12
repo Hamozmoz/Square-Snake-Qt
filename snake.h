@@ -22,6 +22,9 @@ public:
 signals:
     void AngleOfSnakeEyeChanged();
 private:
+    bool InputDisabled{false};
+    void ChangeSnakeDisplacement();
+    void ResetDisplacement();
     double AngleOfSnakeEye{0};
     std::deque<char> Movements;
     void RotateHead();
