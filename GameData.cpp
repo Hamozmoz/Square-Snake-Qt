@@ -81,8 +81,8 @@ GameOn = true;
     }
     void DataContainer::SpawnCherry(){
 
-        for(uint8_t Col {0};Col< Columns ;Col++){
-            for(uint8_t row {0};row<Rows; row++ ){
+        for(int8_t Col {0};Col< Columns ;Col++){
+            for(int8_t row {0};row<Rows; row++ ){
                 if( TilesStates[getMatrixIndex(Col,row)] == TileState::Free){
                     FreeTiles.push_back(Position{Col,row});
                 }
