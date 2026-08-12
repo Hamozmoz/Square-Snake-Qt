@@ -20,7 +20,7 @@ DataContainer::DataContainer()
 // Positions Reader
     QList<Position> DataContainer::Getpositions(){
         QList<Position> list;
-        for(auto i : Positions){
+        for(auto i : Positions.positions){
             list.append(i);
         }
         return list;
@@ -37,7 +37,7 @@ DataContainer::DataContainer()
 
     // Getters For Values
     std::deque<Position>& DataContainer::GetPositions(){
-        return Positions;
+        return Positions.positions;
     }
     std::vector<DataContainer::Direction>& DataContainer::GetDirections(){
         return Directions;
@@ -111,7 +111,7 @@ GameOn = true;
     void DataContainer::initFreeTiles(){
         TilesStates.assign(Columns * Rows ,TileState::Free);
 
-        for(auto Pos : Positions){
+        for(auto Pos : Positions.positions){
             TilesStates[getMatrixIndex(Pos.x,Pos.y)] = TileState::snake;
             }
 
@@ -122,7 +122,7 @@ GameOn = true;
         GameOn = false;
         GameOver = false;
         Directions.assign({Up,Up,Up});
-        Positions.assign({{9,7},{9,8},{9,9}});
+        Positions.positions.assign({{9,7},{9,8},{9,9}});
 
         emit GameStateChanged();
         emit positionschanged();

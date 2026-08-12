@@ -8,44 +8,9 @@
 #include <vector>
 #include<QObject>
 #include <QChronoTimer>
+#include "positionsmodel.h"
   enum TileState :uint8_t{ snake, Free };
-struct Position{
-    Q_GADGET
-public:
-    uint8_t x,y;
-    Q_PROPERTY(uint8_t x READ getx WRITE setx )
-    Q_PROPERTY(uint8_t y READ gety WRITE sety )
-    // x functions
-    uint8_t getx(){return x;}
-    void setx(uint8_t xvalue)
-    {
-        if(x != xvalue)
-        {
-        x = xvalue;
-        }
-    }
-    //y functions
 
-    uint8_t gety(){return y; }
-
-    void sety(uint8_t yvalue)
-    {if(y != yvalue )
-        {
-            y = yvalue;
-        }
-    }
-    bool operator==( Position other)
-    {
-        return(this->x == other.x && this->y == other.y);
-    }
-    Position operator-(const Position pos2 ){
-        Position newposition;
-        newposition.x = this->x - pos2.x;
-        newposition.y = this->y - pos2.y;
-        return newposition;
-    }
-    Position(uint8_t xval = 0, uint8_t yval = 0): x(xval),y(yval){}
-};
 class DataContainer: public QObject{
     Q_OBJECT
     QML_ELEMENT
@@ -121,7 +86,7 @@ private:
  bool GameOn{false};
  QChronoTimer* timer;
   std::vector<Direction> Directions{Up,Up,Up};
- std::deque<Position> Positions{ {9,7},{9,8},{9,9} };
+ PositionsModel Positions;
 std::vector<Position> FreeTiles;
     void SpawnCherry();
 std::vector<TileState> TilesStates;

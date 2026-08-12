@@ -6,6 +6,8 @@ property int rows : 15
 property int columns: 17
 property real tilewidth: window.width/columns
 property real tileheight :window.height/rows
+property real horizontalMoveDistance : tilewidth /25
+property real verticalMoveDistance : tileheight/25
 Repeater{
     model: rows *columns
     Loader{
