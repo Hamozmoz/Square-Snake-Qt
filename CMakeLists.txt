@@ -33,6 +33,8 @@ qt_add_qml_module(appSnake2
         snake.cpp
         SOURCES positionsmodel.h positionsmodel.cpp
         SOURCES Structs.h
+        RESOURCES
+     Gamesprites/CherrySprite.png
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
