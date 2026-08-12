@@ -7,6 +7,7 @@ Window{
 visible: true
 width: 1000
 height : 1000
+title: "SquareSnake"
 Loader{
     active: !DataContainer.GameOn && !DataContainer.GameOver
     focus: !DataContainer.GameOn && !DataContainer.GameOver
